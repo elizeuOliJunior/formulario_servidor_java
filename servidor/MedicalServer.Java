@@ -5,9 +5,14 @@ import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.Headers;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class MedicalServer {
+    private static Connection connection;
     public static void main(String[] args) throws Exception {
+        connectToDatabase();
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         server.createContext("/submit", new MyHandler());
         server.setExecutor(null); // cria um executor padrão
@@ -40,4 +45,20 @@ public class MedicalServer {
             os.close();
         }
     }
+
+    private static void connectToDatabase() {
+        try {
+            // Carregando o driver JDBC do SQLite
+            Class.forName("org.sqlite.JDBC");
+
+            // Criando uma conexão com o banco de dados SQLite 
+            connection = DriverManager.getConnection("jdbc:sqlite:medical_data.db");
+
+            System.out.println("Conectado ao banco de dados SQLite.");
+        } catch (ClassNotFoundException | SQLException e) {
+            System.err.println("Erro ao conectar ao banco de dados SQLite.");
+            e.printStackTrace();
+        }
+    }
+
 }
