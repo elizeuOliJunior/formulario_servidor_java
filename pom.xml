@@ -10,12 +10,13 @@
 
     <!-- Dependências -->
     <dependencies>
-        <!-- SQLite JDBC Driver -->
+        <!-- MONGODB Driver -->
         <dependency>
-            <groupId>org.xerial</groupId>
-            <artifactId>sqlite-jdbc</artifactId>
-            <version>3.43.2</version> <!-- Use a versão mais recente disponível -->
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>3.12.10</version> <!-- Verifique a versão mais recente no site oficial -->
         </dependency>
+
     </dependencies>
 
 </project>
