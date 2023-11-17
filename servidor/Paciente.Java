@@ -15,7 +15,7 @@ public class Paciente {
     private String unidadeClinica;
     private String convenio;
     private Date dataConsulta;
-    private String horarioConsulta;
+    private String horarioConsulta; 
 
     // Construtor
     public Paciente(String nome, String cpf, String telefone, String email, String pais,

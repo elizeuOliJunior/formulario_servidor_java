@@ -14,9 +14,8 @@
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>
-            <version>3.12.10</version> <!-- Verifique a versão mais recente no site oficial -->
+            <version>3.12.9</version> <!-- Use a versão mais recente disponível -->
         </dependency>
-
     </dependencies>
 
 </project>
