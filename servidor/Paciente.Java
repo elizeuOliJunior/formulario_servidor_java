@@ -6,12 +6,8 @@ public class Paciente {
     private String cpf;
     private String telefone;
     private String email;
-    private String pais;
-    private String estado;
     private String cep;
-    private String rua;
-    private String bairro;
-    private String complemento;
+    private String endereco;
     private String especialidadeMedica;
     private String unidadeClinica;
     private String convenio;
@@ -19,20 +15,15 @@ public class Paciente {
     private String horarioConsulta; 
 
     // Construtor
-    public Paciente(String nome, String cpf, String telefone, String email, String pais,
-                    String estado, String cep, String rua, String bairro, String complemento,
+    public Paciente(String nome, String cpf, String telefone, String email,, String cep, String endereco,
                     String especialidadeMedica, String unidadeClinica, String convenio,
                     Date dataConsulta, String horarioConsulta) {
         this.nome = nome;
         this.cpf = cpf;
         this.telefone = telefone;
         this.email = email;
-        this.pais = pais;
-        this.estado = estado;
         this.cep = cep;
-        this.rua = rua;
-        this.bairro = bairro;
-        this.complemento = complemento;
+        this.endereco;
         this.especialidadeMedica = especialidadeMedica;
         this.unidadeClinica = unidadeClinica;
         this.convenio = convenio;
@@ -63,28 +54,12 @@ public class Paciente {
         return email;
     }
 
-    public String getPais() {
-        return pais;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
     public String getCep() {
         return cep;
     }
 
-    public String getRua() {
-        return rua;
-    }
-
-    public String getBairro() {
-        return bairro;
-    }
-
-    public String getComplemento() {
-        return complemento;
+    public String getEndereco(){
+        return endereco;
     }
 
     public String getEspecialidadeMedica() {
@@ -128,28 +103,13 @@ public class Paciente {
         this.email = email;
     }
 
-    public void setPais(String pais) {
-        this.pais = pais;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
 
     public void setCep(String cep) {
         this.cep = cep;
     }
 
-    public void setRua(String rua) {
-        this.rua = rua;
-    }
-
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
-
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
+    public void setEndereco(String endereco){
+        this.endereco = endereco;
     }
 
     public void setEspecialidadeMedica(String especialidadeMedica) {

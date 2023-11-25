@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public class MedicalServer {
     private static final String JDBC_URL = "jdbc:sqlite:medicalservice.db";
-    private static final String INSERT_PACIENTE_SQL = "INSERT INTO pacientes (nome, cpf, telefone, /* ... outros campos ... */) VALUES (?, ?, ?)";
+    private static final String INSERT_PACIENTE_SQL = "INSERT INTO pacientes (nome, cpf, telefone, email, cep, endereco, especialidadeMedica, unidadeClinica, convenio, dataConsulta, horarioConsulta) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 
     public static void main(String[] args) throws IOException {
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
@@ -52,8 +52,15 @@ public class MedicalServer {
                 preparedStatement.setString(1, paciente.getNome());
                 preparedStatement.setString(2, paciente.getCpf());
                 preparedStatement.setString(3, paciente.getTelefone());
-                // Defina outros parâmetros conforme necessário
-
+                preparedStatement.setString(4, paciente.getEmail());
+                preparedStatement.setString(5, paciente.getCep());
+                preparedStatement.setString(6, paciente.getEndereco());
+                preparedStatement.setString(7, paciente.getEspecialidadeMedica());
+                preparedStatement.setString(8, paciente.getUnidadeClinica());
+                preparedStatement.setString(9, paciente.getConvenio());
+                preparedStatement.setString(10, paciente.getDataConsulta());
+                preparedStatement.setString(11, paciente.getHorarioConsulta());
+                
                 preparedStatement.executeUpdate();
             }
         }

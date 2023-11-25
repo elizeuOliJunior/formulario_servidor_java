@@ -13,8 +13,15 @@ public class PacienteDAO {
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "nome TEXT," +
                     "cpf TEXT," +
-                    "telefone TEXT" +
-                    // ... outros campos ...
+                    "telefone TEXT," +
+                    "email TEXT," +
+                    "cep TEXT," +
+                    "endereco TEXT,"+
+                    "especialidadeMedica TEXT,"+
+                    "unidadeClinica TEXT,"+
+                    "convenio TEXT,"+
+                    "dataConsulta TEXT,"+
+                    "horarioConsulta TEXT"
                     ")";
             connection.createStatement().execute(createTableSQL);
 
@@ -26,11 +33,19 @@ public class PacienteDAO {
 
     public void insertPaciente(Paciente paciente) {
         try {
-            String insertSQL = "INSERT INTO pacientes (nome, cpf, telefone) VALUES (?, ?, ?)";
+            String insertSQL = "INSERT INTO pacientes (nome, cpf, telefone, email, cep, endereco, especialidadeMedica, unidadeClinica, convenio, dataConsulta, horarioConsulta ) VALUES (?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setString(1, paciente.getNome());
                 preparedStatement.setString(2, paciente.getCpf());
                 preparedStatement.setString(3, paciente.getTelefone());
+                preparedStatement.setString(4, paciente.getEmail());
+                preparedStatement.setString(5, paciente.getCep());
+                preparedStatement.setString(6, paciente.getEndereco());
+                preparedStatement.setString(7, paciente.getEspecialidadeMedica());
+                preparedStatement.setString(8, paciente.getUnidadeClinica());
+                preparedStatement.setString(9, paciente.getConvenio());
+                preparedStatement.setString(10, paciente.getDataConsulta());
+                preparedStatement.setString(11, paciente.getHorarioConsulta());
                 // ... outros campos ...
 
                 int affectedRows = preparedStatement.executeUpdate();
@@ -58,9 +73,16 @@ public class PacienteDAO {
                     String nome = resultSet.getString("nome");
                     String cpf = resultSet.getString("cpf");
                     String telefone = resultSet.getString("telefone");
-                    // ... outros campos ...
+                    String email = resultSet.getString("email");
+                    String cep = resultSet.getString("cep");
+                    String endereco = resultSet.getString("endereco");
+                    String especialidadeMedica = resultSet.getString("especialidadeMedica");
+                    String unidadeClinica = resultSet.getString("unidadeClinica");
+                    String convenio = resultSet.getString("convenio");
+                    String dataConsulta = resultSet.getString("dataConsulta");
+                    String horarioConsulta = resultSet.getString("horarioConsulta");
 
-                    System.out.println("ID: " + id + ", Nome: " + nome + ", CPF: " + cpf + ", Telefone: " + telefone);
+                    System.out.println(" Nome: " + nome + ", CPF: " + cpf + ", Telefone: " + telefone + "Data: " + dataConsulta + "Horário: " + horarioConsulta);
                 }
             }
         } catch (SQLException e) {
