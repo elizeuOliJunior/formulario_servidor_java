@@ -1,72 +1,76 @@
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import org.bson.Document;
-
-import java.util.logging.Logger;
+import java.sql.*;
 
 public class PacienteDAO {
-    private MongoCollection<Document> pacientesCollection;
-    private static final Logger LOGGER = Logger.getLogger(PacienteDAO.class.getName());
+    private Connection connection;
 
     public PacienteDAO() {
-        // String de conexão para o seu banco de dados MongoDB
-        String connectionString = "mongodb+srv://juliocesarreali:<password>@medicalservicedb.a74fjpv.mongodb.net/";
-        // Criação do cliente MongoDB
-        MongoClient mongoClient = MongoClients.create(connectionString);
+        try {
+            // Conectar ao banco de dados SQLite (o arquivo será criado se não existir)
+            connection = DriverManager.getConnection("jdbc:sqlite:minhabasededados.db");
 
-        // Conecte-se ao banco de dados 
-        MongoDatabase database = mongoClient.getDatabase("MedicalServiceDB");
+            // Criar a tabela se não existir
+            String createTableSQL = "CREATE TABLE IF NOT EXISTS pacientes (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "nome TEXT," +
+                    "cpf TEXT," +
+                    "telefone TEXT" +
+                    // ... outros campos ...
+                    ")";
+            connection.createStatement().execute(createTableSQL);
 
-        // Obtenha uma referência para a coleção 
-        this.pacientesCollection = database.getCollection("Pacientes");
-
-        createCollection(); // Chame este método para garantir que a coleção seja criada ao instanciar a classe
-    }
-
-    private void createCollection() {
-        // Não é necessário criar explicitamente uma coleção no MongoDB
-        // O MongoDB cria automaticamente a coleção quando você insere documentos nela
+            System.out.println("Conexão com o banco de dados SQLite estabelecida!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void insertPaciente(Paciente paciente) {
         try {
-            Document pacienteDoc = new Document()
-                    .append("nome", paciente.getNome())
-                    .append("idade", paciente.getIdade())
-                    .append("diagnostico", paciente.getDiagnostico());
+            String insertSQL = "INSERT INTO pacientes (nome, cpf, telefone) VALUES (?, ?, ?)";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS)) {
+                preparedStatement.setString(1, paciente.getNome());
+                preparedStatement.setString(2, paciente.getCpf());
+                preparedStatement.setString(3, paciente.getTelefone());
+                // ... outros campos ...
 
-            pacientesCollection.insertOne(pacienteDoc);
+                int affectedRows = preparedStatement.executeUpdate();
 
-            String logMessage = String.format("Paciente inserido no banco de dados: %s, %s", paciente.getNome(), paciente.getCpf());
-            LOGGER.info(logMessage);
-        } catch (Exception e) {
-            String errorMessage = "Erro ao inserir paciente no banco de dados";
-            LOGGER.severe(errorMessage);
+                if (affectedRows > 0) {
+                    try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                        if (generatedKeys.next()) {
+                            paciente.setId(generatedKeys.getInt(1));
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void fetchPacientes() {
         try {
-            for (Document document : pacientesCollection.find()) {
-                int id = document.getInteger("_id");
-                String nome = document.getString("nome");
-                int idade = document.getInteger("idade");
-                String diagnostico = document.getString("diagnostico");
+            String selectSQL = "SELECT * FROM pacientes";
+            try (Statement statement = connection.createStatement();
+                 ResultSet resultSet = statement.executeQuery(selectSQL)) {
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String nome = resultSet.getString("nome");
+                    String cpf = resultSet.getString("cpf");
+                    String telefone = resultSet.getString("telefone");
+                    // ... outros campos ...
 
-                System.out.println("ID: " + id + ", Nome: " + nome + ", Idade: " + idade + ", Diagnóstico: " + diagnostico);
+                    System.out.println("ID: " + id + ", Nome: " + nome + ", CPF: " + cpf + ", Telefone: " + telefone);
+                }
             }
-        } catch (Exception e) {
-            System.err.println("Erro ao consultar dados da coleção 'pacientes'.");
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public static void main(String[] args) {
         PacienteDAO pacienteDAO = new PacienteDAO();
-        pacienteDAO.insertPaciente(new Paciente("Nome", 30, "Algum diagnóstico"));
+        pacienteDAO.insertPaciente(new Paciente("Nome", "123456789", "987654321"));
         pacienteDAO.fetchPacientes();
     }
 }

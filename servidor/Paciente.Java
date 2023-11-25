@@ -1,6 +1,7 @@
 import java.util.Date;
 
 public class Paciente {
+    private int id;
     private String nome;
     private String cpf;
     private String telefone;
@@ -41,6 +42,11 @@ public class Paciente {
 
 
     // Métodos getters
+
+    public int getId() {
+        return id;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -102,6 +108,10 @@ public class Paciente {
     }
 
     // Métodos setters
+    public void setId(int Id) {
+        this.id = id;
+    }
+
     public void setNome(String nome) {
         this.nome = nome;
     }

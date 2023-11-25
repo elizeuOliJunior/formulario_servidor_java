@@ -10,12 +10,13 @@
 
     <!-- Dependências -->
     <dependencies>
-        <!-- MONGODB Driver -->
+ 
         <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-            <version>3.12.9</version> <!-- Use a versão mais recente disponível -->
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.34.0</version> <!-- Verifique a versão mais recente no Maven Central -->
         </dependency>
+
     </dependencies>
 
 </project>
