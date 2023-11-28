@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulário Médico</title>
     <link rel="stylesheet" href="assets/css/style_form.css">
 </head>
@@ -9,9 +11,9 @@
     <div class="container">
         <h2>Formulário Médico</h2>
 
-        <div class="form-section">
-            <h3>Informações Pessoais</h3>
-            <form id="personal-info-form">
+        <form id="complete-form">
+            <div class="form-section">
+                <h3>Informações Pessoais</h3>
                 <label for="name">Nome:</label>
                 <input type="text" id="name" name="name" required>
 
@@ -23,12 +25,10 @@
 
                 <label for="email">Email:</label>
                 <input type="text" id="email" name="email" required>
-            </form>
-        </div>
+            </div>
 
-        <div class="form-section">
-            <h3>Endereço</h3>
-            <form id="address-form">
+            <div class="form-section">
+                <h3>Endereço</h3>
                 <label for="country">País:</label>
                 <input type="text" id="country" name="country" required>
 
@@ -46,18 +46,15 @@
 
                 <label for="complement">Complemento:</label>
                 <input type="text" id="complement" name="complement">
-            </form>
-        </div>
+            </div>
 
-        <div class="form-section">
-            <h3>Agende sua Consulta</h3>
-            <form id="appointment-form">
+            <div class="form-section">
+                <h3>Agende sua Consulta</h3>
                 <label for="specialty">Especialidade Médica:</label>
                 <select id="specialty" name="specialty">
                     <option value="cardiologia">Cardiologia</option>
                     <option value="dermatologia">Dermatologia</option>
                     <option value="ortopedia">Ortopedia</option>
-                    
                 </select>
 
                 <label for="clinic">Unidade:</label>
@@ -79,10 +76,10 @@
 
                 <label for="time">Horário:</label>
                 <input type="time" id="time" name="time" required>
-            </form>
-        </div>
+            </div>
 
-        <input type="submit" value="Enviar" onclick="submitForm()">
+            <input type="submit" value="Enviar">
+        </form>
     </div>
 
     <script src="assets/script/script.js"></script>
